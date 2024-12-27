@@ -55,5 +55,6 @@ if (process.argv[2] === '-d') {
     importData();
 }
 
+// console.log(colors.green(process.argv));
 // console.log(`${process.argv}`.green);
 // console.log(colors.green.inverse(process.argv));
