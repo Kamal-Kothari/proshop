@@ -5,6 +5,7 @@ import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 // import products from '../products'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
+import Message from '../components/Message'
 // import axios from 'axios'
 // import { useEffect, useState } from 'react'
 import { useGetProductByIdQuery } from '../slices/productsApiSlice'
@@ -27,10 +28,11 @@ const ProductScreen = () => {
     // console.log(product)   ;
     return (
         <>
+        
             {isLoading ? (
                 <Loader />
             ) : error ? (
-                <h1>{error?.data?.message || error.error}</h1>
+                <Message variant='danger'>{error?.data?.message || error.error}</Message>
             ) : (
                 <>
                     <h1>ProductScreen</h1>
