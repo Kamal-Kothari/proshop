@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 // import products from '../products'
 import Rating from '../components/Rating'
+import Loader from '../components/Loader'
 // import axios from 'axios'
 // import { useEffect, useState } from 'react'
 import { useGetProductByIdQuery } from '../slices/productsApiSlice'
@@ -27,7 +28,7 @@ const ProductScreen = () => {
     return (
         <>
             {isLoading ? (
-                <h1>Loading...</h1>
+                <Loader />
             ) : error ? (
                 <h1>{error?.data?.message || error.error}</h1>
             ) : (
