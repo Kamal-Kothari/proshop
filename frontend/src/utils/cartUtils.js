@@ -29,6 +29,9 @@ export const updateCart = (state, item) => {
         Number(state.taxPrice)
     ).toFixed(2);
     // Save the cart to localStorage
+
+    state.totalItems = state.cartItems.reduce((a,c)=> a + c.qty,0);
+
     localStorage.setItem('cart', JSON.stringify(state));
     return state;
 };
