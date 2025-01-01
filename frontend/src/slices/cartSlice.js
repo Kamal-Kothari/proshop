@@ -25,10 +25,12 @@ const cartSlice = createSlice({
 
 
             //all prices calculation
+            // const result = Math.round(123.456 * 100) / 100; // 123.46
+
             //items price calculation
-            state.itemsPrice = state.cartItems.reduce((acc, curItem)=>{
+            state.itemsPrice = Number((state.cartItems.reduce((acc, curItem)=>{
                 return acc + curItem.price * curItem.qty;
-            },0);
+            },0)).toFixed(2));
 
             //shipping price calculation
             state.shippingPrice = state.itemsPrice > 100 ? 0 : 10;
