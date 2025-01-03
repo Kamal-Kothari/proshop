@@ -1,17 +1,30 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { updateCart } from '../utils/cartUtils';
 
-const initialState = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : {cartItems: []};
+const initialState = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : { cartItems: [] };
 
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addToCart : (state,action)=>{
+        addToCart: (state, action) => {
+            //under action we want item to be added with qty
             const item = action.payload;
             console.log(item);
 
-            return updateCart(state, item);
+            // Check if the item is already in the cart
+            const existItem = state.cartItems.find((x) => x._id === item._id);
+            if (existItem) {
+                // If exists, update quantity
+                state.cartItems = state.cartItems.map((x) =>
+                    x._id === existItem._id ? item : x
+                );
+            } else {
+                // If not exists, add new item to cartItems
+                state.cartItems = [...state.cartItems, item];
+            }
+
+            return updateCart(state);
             /*
             const existItem = state.cartItems.find(x => x._id === item._id);
             console.log(existItem);
@@ -48,11 +61,17 @@ const cartSlice = createSlice({
 
             localStorage.setItem('cart', JSON.stringify(state));
             */
-            
-        }
+
+        },
+        removeFromCart: (state, action) => {
+            //under action we want id of the item to be removed
+            const id = action.payload;
+            state.cartItems = state.cartItems.filter(x => x._id !== id);
+            return updateCart(state);
+        },
     }
 })
 
-export const {addToCart} = cartSlice.actions;
+export const { addToCart, removeFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

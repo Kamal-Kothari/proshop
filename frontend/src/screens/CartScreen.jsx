@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../slices/cartSlice';
+import { addToCart, removeFromCart } from '../slices/cartSlice';
 import Message from '../components/Message';
 import { FaTrash } from 'react-icons/fa';
 
@@ -13,6 +13,10 @@ const CartScreen = () => {
 
     const addToCartHandler = (item, qty) => {
         dispatch(addToCart({ ...item, qty }));
+    }
+
+    const removeFromCartHandler = (id) => {
+        dispatch(removeFromCart(id));
     }
 
     return (
@@ -56,7 +60,9 @@ const CartScreen = () => {
                                             </Form.Control>
                                         </Col>
                                         <Col md={2}>
-                                            <Button type='button' variant='light' >
+                                            <Button type='button' variant='light' onClick = {(e)=>{
+                                                removeFromCartHandler(item._id);
+                                            }}  > 
                                                 <FaTrash />
                                             </Button>
                                         </Col>
