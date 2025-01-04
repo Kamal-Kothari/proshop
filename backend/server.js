@@ -7,6 +7,7 @@ import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import { notFoundErr, errorHandler } from './middleware/errorHandler.js';
 import { url } from 'inspector';
+import cookieParser from 'cookie-parser';
 
 connectDB();
 
@@ -16,6 +17,9 @@ const app = express();
 // app.use(express.json())
 // form data parser
 app.use(express.urlencoded({extended: true}));
+
+//read cookie 
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
   res.send('Api is running bro...');
