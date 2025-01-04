@@ -6,12 +6,16 @@ import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import { notFoundErr, errorHandler } from './middleware/errorHandler.js';
+import { url } from 'inspector';
 
 connectDB();
 
 const app = express();
 
-app.use(express.json())
+//body parser
+// app.use(express.json())
+// form data parser
+app.use(express.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
   res.send('Api is running bro...');
