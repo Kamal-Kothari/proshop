@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../slices/cartSlice';
@@ -8,6 +8,8 @@ import { FaTrash } from 'react-icons/fa';
 
 const CartScreen = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const cart = useSelector(state => state.cart);
     const { cartItems, totalItems, totalPrice, itemsPrice } = cart;
 
@@ -17,6 +19,10 @@ const CartScreen = () => {
 
     const removeFromCartHandler = (id) => {
         dispatch(removeFromCart(id));
+    }
+
+    const checkoutHandler = () => {
+        navigate('/login?redirect=/shipping');
     }
 
     return (
@@ -86,7 +92,7 @@ const CartScreen = () => {
                                 </ListGroup.Item>
                             </ListGroup>
                             <ListGroup.Item>
-                                <Button type='button' className='btn-block' disabled={cartItems.length === 0} style={{margin: '10px auto', display: 'block'}}>
+                                <Button type='button' className='btn-block' disabled={cartItems.length === 0} style={{margin: '10px auto', display: 'block'}} onClick={checkoutHandler}>
                                     Proceed to Checkout
                                 </Button>
                             </ListGroup.Item>
