@@ -3,6 +3,10 @@ import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import Logo from '../assets/logo.png';
 import { useSelector } from 'react-redux';
+import { useLogoutMutation } from '../slices/usersApiSlice';
+import { logout  } from '../slices/authSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const { totalItems } = useSelector((state) => state.cart);
@@ -10,9 +14,20 @@ const Header = () => {
   console.log(totalItems);
   console.log(userInfo);
 
-  const logoutUserHandler = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [logoutUser] = useLogoutMutation();
+
+  const logoutUserHandler = async () => {
     // logoutUser(); //clears local storage
     console.log('logout');
+    try {
+      await logoutUser().unwrap();
+      dispatch(logout());
+      navigate('/login');
+    } catch (err) {
+      console.log(err);
+    }
     
   };
   
