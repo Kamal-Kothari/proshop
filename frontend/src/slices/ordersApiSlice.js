@@ -15,17 +15,18 @@ export const ordersApi = apiSlice.injectEndpoints({
                 url: `${ORDERS_URL}/${id}`,
             })
         }),
-        payOrder : builder.mutation({
-            query: ({orderId, details}) => ({
+        payOrder: builder.mutation({
+            query: ({ orderId, details }) => ({
                 url: `${ORDERS_URL}/${orderId}/pay`,
                 method: 'PUT',
                 body: { ...details },  //creates shallow copy of order, like xerox copy so no change in original
             })
         }),
-        getPaypalClientId : builder.query({
+        getPaypalClientId: builder.query({
             query: () => ({
                 url: PAYPAL_URL,
-            })
+            }),
+            keepUnusedDataFor: 5,
         }),
     }),
 });
