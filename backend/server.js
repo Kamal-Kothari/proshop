@@ -17,18 +17,22 @@ const app = express();
 //body parser
 app.use(express.json())
 // form data parser
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 //read cookie 
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
-  res.send('Api is running bro...');
+    res.send('Api is running bro...');
 });
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
+
+app.get('/api/config/paypal', (req, res) => {
+    res.send(process.env.PAYPAL_CLIENT_ID);
+})
 
 app.use(notFoundErr);
 app.use(errorHandler);
@@ -36,6 +40,6 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 // const PORT = 5000;
 
-app.listen(PORT, ()=>{
-  console.log(`Server running on port ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 })
