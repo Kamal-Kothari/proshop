@@ -10,4 +10,4 @@ const AdminRoute = () => {
   
 }
 
-export default AdminRoute
+export default AdminRoute;
