@@ -1,3 +1,4 @@
+import { get } from "mongoose";
 import { ORDERS_URL, PAYPAL_URL } from "../constants";
 import { apiSlice } from "./apiSlice";
 
@@ -35,7 +36,14 @@ export const ordersApi = apiSlice.injectEndpoints({
             keepUnusedDataFor: 5,
             providesTags: ['Order'],
         }),
+        getOrders: builder.query({
+            query: () => ({
+                url: ORDERS_URL,
+            }),
+            keepUnusedDataFor: 5,
+            providesTags: ['Order'],
+        }),
     }),
 });
 
-export const { useCreateOrderMutation, useGetOrderByIdQuery, usePayOrderMutation, useGetPaypalClientIdQuery, useGetMyOrdersQuery } = ordersApi;
+export const { useCreateOrderMutation, useGetOrderByIdQuery, usePayOrderMutation, useGetPaypalClientIdQuery, useGetMyOrdersQuery, useGetOrdersQuery } = ordersApi;
