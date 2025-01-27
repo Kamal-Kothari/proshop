@@ -9,8 +9,7 @@ import Loader from '../components/Loader';
 import { useProfileMutation } from '../slices/usersApiSlice';
 // import { useGetMyOrdersQuery } from '../slices/orderApiSlice';
 import { setCredentials } from '../slices/authSlice';
-import { use } from 'react';
-
+import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
 
 const ProfileScreen = () => {
     const [name, setName] = useState('');
@@ -23,7 +22,8 @@ const ProfileScreen = () => {
 
     const { userInfo } = useSelector((state) => state.auth);
 
-    const [updateProfile, { isLoading }] = useProfileMutation();
+    const [updateProfile, { isLoading: loadingUpdateProfile }] = useProfileMutation();
+    const { data: orders, isLoading,error } = useGetMyOrdersQuery();  
 
     useEffect(() => {
         setName(userInfo.name);
@@ -72,7 +72,7 @@ const ProfileScreen = () => {
                 </Form>
             </Col>
             <Col md={9}>
-                {/* <h2>My Orders</h2>
+                <h2>My Orders</h2>
                 {isLoading ? (<Loader />) : error ? (<Message variant='danger'>{error}</Message>) : (
                     <Table striped bordered hover responsive className='table-sm'>
                         <thead>
@@ -94,7 +94,7 @@ const ProfileScreen = () => {
                                     <td>{order.isPaid ? order.paidAt.substring(0, 10) : (<FaTimes style={{ color: 'red' }} />)}</td>
                                     <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : (<FaTimes style={{ color: 'red' }} />)}</td>
                                     <td>
-                                        <LinkContainer to={`/order/${order._id}`}>
+                                        <LinkContainer to={`/orders/${order._id}`}>
                                             <Button className='btn-sm' variant='light'>Details</Button>
                                         </LinkContainer>
                                     </td>
@@ -102,7 +102,7 @@ const ProfileScreen = () => {
                             ))}
                         </tbody>
                     </Table>
-                )} */}
+                )}
             </Col>
         </Row>
     </>
