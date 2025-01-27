@@ -28,6 +28,7 @@ import { Provider } from 'react-redux';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import AdminRoute from './components/AdminRoute';
 import OrderListScreen from './screens/admin/OrderListScreen';
+import ProductListScreen from './screens/admin/ProductListScreen';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,6 +47,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path='' element={<AdminRoute />} >
         <Route path='/admin/orderList' element={<OrderListScreen />} />
+        <Route path='/admin/productList' element={<ProductListScreen />} />
         
       </Route>
     </Route>
