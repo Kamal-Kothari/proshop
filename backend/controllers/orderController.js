@@ -96,7 +96,17 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 //if user has name , email and we send put with name , it will update name and make email null, 
 // whereas patch would update only name and keep email as it is
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
-    res.send('update order to delivered');
+    // res.send('update order to delivered');
+    const order = await Order.findById(req.params.id);
+    if(order){
+        order.isDelivered = true;
+        order.deliveredAt = Date.now();
+        const updatedOrder = await order.save();
+        res.status(200).json(updatedOrder);
+    }else{
+        res.status(404);
+        throw new Error('Order not found');
+    }
 });
 // @desc    get all orders
 // @route   get /api/orders
