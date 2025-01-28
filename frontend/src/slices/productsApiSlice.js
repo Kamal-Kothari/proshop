@@ -1,4 +1,5 @@
 import { PRODUCTS_URL } from '../constants';
+import { updateCart } from '../utils/cartUtils';
 import { apiSlice } from './apiSlice';
 
 export const productsApi = apiSlice.injectEndpoints({
@@ -14,6 +15,7 @@ export const productsApi = apiSlice.injectEndpoints({
                 url: `${PRODUCTS_URL}/${id}`,
             }),
             keepUnusedDataFor: 5,
+            providesTags: ['Product'],
         }),
         createProduct: builder.mutation({
             query: () => ({
@@ -22,7 +24,15 @@ export const productsApi = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['Product'],
         }),
+        updateProduct: builder.mutation({
+            query: (data) => ({
+                url: `${PRODUCTS_URL}/${data._id}/edit`,
+                method: 'PUT',
+                body: data,
+            }),
+            invalidatesTags: ['Product'],
+        }),
     })
 });
 
-export const { useGetProductsQuery, useGetProductByIdQuery , useCreateProductMutation} = productsApi;
+export const { useGetProductsQuery, useGetProductByIdQuery , useCreateProductMutation, useUpdateProductMutation} = productsApi;
