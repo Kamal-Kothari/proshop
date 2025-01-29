@@ -3,15 +3,21 @@ import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
-import { useGetProductsQuery, useCreateProductMutation } from '../../slices/productsApiSlice';
+import { useGetProductsQuery, useCreateProductMutation, useDeleteProductMutation } from '../../slices/productsApiSlice';
 import { toast } from 'react-toastify';
 
 const ProductListScreen = () => {
     const { data: products, isLoading, error, refetch } = useGetProductsQuery();
     console.log(products);
 
-    const deleteHandler = (id) => {
+    const [deleteProduct, { isLoading: loadingDelete }] = useDeleteProductMutation();
+
+    const deleteHandler = async (id) => {
         console.log(id);
+        if (window.confirm('Are you sure you want to delete this product?')) {
+            await deleteProduct(id);
+            refetch();
+        }
     };
 
     const [createProduct, { isLoading: loadingCreate }] =
