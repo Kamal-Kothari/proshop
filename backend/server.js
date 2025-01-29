@@ -44,6 +44,7 @@ app.get('/api/config/paypal', (req, res) => {
 const __dirname = path.resolve();  // Gets the absolute path of the current directory
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));  // Serve uploaded files statically
 // Files in /uploads can now be accessed via http://localhost:5000/uploads/{filename}.
+//http://localhost:5000/uploads/image-1738132611001.jpg
 
 
 app.use(notFoundErr);
