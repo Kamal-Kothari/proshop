@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetUsersQuery } from '../../slices/usersApiSlice';
+import { useGetUsersQuery, useDeleteUserMutation } from '../../slices/usersApiSlice';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FaTimes, FaEdit, FaTrash, FaCheck } from 'react-icons/fa';
@@ -11,11 +11,13 @@ const UserListScreen = () => {
     const { data: users, isLoading, error, refetch } = useGetUsersQuery();
     // console.log(users);
 
+    const [deleteUser] = useDeleteUserMutation();
+
     const deleteHandler = async (id) => {
         if (window.confirm('Are you sure you want to delete this user?')) {
             try {
-                // await deleteProduct(id);
-                // refetch();
+                await deleteUser(id);
+                refetch();
             } catch (err) {
                 toast.error(err?.data?.message || err.error);
             }
