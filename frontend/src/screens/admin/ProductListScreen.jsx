@@ -5,10 +5,23 @@ import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import { useGetProductsQuery, useCreateProductMutation, useDeleteProductMutation } from '../../slices/productsApiSlice';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import Paginate from '../../components/Paginate';
+import { useEffect } from 'react';
 
 const ProductListScreen = () => {
-    const { data: products, isLoading, error, refetch } = useGetProductsQuery();
-    console.log(products);
+    let { pageNumber } = useParams();
+    pageNumber = pageNumber || 1;
+    const { data, isLoading, error, refetch } = useGetProductsQuery({ pageNumber });
+    // console.log(data.products); // gives error as data is undefined
+    // console.log(data?.products); // works fine as it checks if data is undefined
+
+    useEffect(() => {
+        if (data) {
+            console.log("API Response:", data?.products);
+        }
+    }, [data]);  // Runs when `data` is updated
+    
 
     const [deleteProduct, { isLoading: loadingDelete }] = useDeleteProductMutation();
 
@@ -66,7 +79,7 @@ const ProductListScreen = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {products.map((product) => (
+                            {data.products.map((product) => (
                                 <tr key={product._id}>
                                     <td>{product._id}</td>
                                     <td>{product.name}</td>
@@ -92,6 +105,7 @@ const ProductListScreen = () => {
                         </tbody>
                     </Table>
                     {/* PAGINATE PLACEHOLDER */}
+                    {data.pages > 1 && <Paginate pages={data.pages} page={data.page} isAdmin={true} /> }
                 </>
             )}
         </>

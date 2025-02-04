@@ -4,10 +4,11 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { useGetProductsQuery } from '../slices/productsApiSlice';
 import { useParams } from 'react-router-dom';
+import Paginate from '../components/Paginate';
 
 const HomeScreen = () => {
-  const { pageNumber  } = useParams();
-  const { data = [], error, isLoading } = useGetProductsQuery({ pageNumber});
+  const { pageNumber } = useParams();
+  const { data = [], error, isLoading } = useGetProductsQuery({ pageNumber });
 
 
   return (
@@ -26,6 +27,9 @@ const HomeScreen = () => {
               </Col>
             ))}
           </Row>
+          <div className="d-flex justify-content-center">
+            <Paginate pages={data.pages} page={data.page} />
+          </div>
         </>
       )}
 
