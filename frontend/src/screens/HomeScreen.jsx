@@ -7,8 +7,8 @@ import { useParams } from 'react-router-dom';
 import Paginate from '../components/Paginate';
 
 const HomeScreen = () => {
-  const { pageNumber } = useParams();
-  const { data = [], error, isLoading } = useGetProductsQuery({ pageNumber });
+  const { pageNumber, keyword } = useParams();
+  const { data = [], error, isLoading } = useGetProductsQuery({ pageNumber, keyword });
 
 
   return (
@@ -28,7 +28,7 @@ const HomeScreen = () => {
             ))}
           </Row>
           <div className="d-flex justify-content-center">
-            <Paginate pages={data.pages} page={data.page} />
+            <Paginate pages={data.pages} page={data.page} keyword={keyword ? keyword : ''} />
           </div>
         </>
       )}
