@@ -7,10 +7,16 @@ import { useParams } from 'react-router-dom';
 import Paginate from '../components/Paginate';
 import { Link } from 'react-router-dom';
 import ProductCarousel from '../components/ProductCarousel';
+import Meta from '../components/Meta';
+// import { useEffect } from 'react';
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
   const { data = [], error, isLoading } = useGetProductsQuery({ pageNumber, keyword });
   const { data: topProducts = [], error: topError, isLoading: topLoading } = useGetTopProductsQuery();
+
+  // useEffect(() => {
+  //   document.title = 'Our Services - My MERN App';
+  // }, []);
 
 
   return (
@@ -18,6 +24,7 @@ const HomeScreen = () => {
       {keyword ? (<Link to='/' className='btn btn-light'>Go Back</Link>)
         : (
           <>
+            <Meta />
             <h3>Top Rated Products</h3>
             {/* <Row>
               {topProducts.map((product) => (

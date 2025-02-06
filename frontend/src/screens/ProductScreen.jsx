@@ -14,6 +14,7 @@ import { addToCart } from '../slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify';
+import Meta from '../components/Meta';
 
 const ProductScreen = () => {
     const { id: productId } = useParams()
@@ -74,6 +75,7 @@ const ProductScreen = () => {
                 <Message variant='danger'>{error?.data?.message || error.error}</Message>
             ) : (
                 <>
+                    <Meta title={product.name} description={product.description} />
                     <h1>ProductScreen</h1>
                     <Link className='btn btn-light my-3' to='/'>
                         Go Back
