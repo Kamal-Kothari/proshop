@@ -5,7 +5,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
     // const products = await Product.find({});
     // res.json(products);
 
-    const pageSize = 1;
+    const pageSize = 8;
     const page = Number(req.query.pageNumber) || 1; // ?page=2&keyword=apple
     const keyword = req.query.keyword
         ? {
@@ -15,7 +15,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
             },
         }
         : {};
-    
+
     const count = await Product.countDocuments({ ...keyword });
     const products = await Product.find({ ...keyword })
         .limit(pageSize)
@@ -132,4 +132,14 @@ const createReview = asyncHandler(async (req, res) => {
 
 });
 
-export { getAllProducts, getProductById, createProduct, updateProduct, deleteProductById, createReview };
+// @desc    get top 3 rated products
+// @route   get /api/products/top  
+// @access  public
+const getTopProducts = asyncHandler(async (req, res) => {
+    const products = await Product.find({})
+        .sort({ rating: -1 })   // -1 for descending order
+        .limit(3);
+    res.status(200).json(products);
+})
+
+export { getAllProducts, getProductById, createProduct, updateProduct, deleteProductById, createReview, getTopProducts };
