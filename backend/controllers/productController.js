@@ -5,7 +5,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
     // const products = await Product.find({});
     // res.json(products);
 
-    const pageSize = 8;
+    const pageSize = process.env.PAGINATION_LIMIT || 6;
     const page = Number(req.query.pageNumber) || 1; // ?page=2&keyword=apple
     const keyword = req.query.keyword
         ? {

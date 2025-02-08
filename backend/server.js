@@ -24,9 +24,9 @@ app.use(express.urlencoded({ extended: true }));
 //read cookie 
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-    res.send('Api is running bro...');
-});
+// app.get('/', (req, res) => {
+//     res.send('Api is running bro...');
+// });
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
@@ -46,6 +46,18 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));  // Serve
 // Files in /uploads can now be accessed via http://localhost:5000/uploads/{filename}.
 //http://localhost:5000/uploads/image-1738132611001.jpg
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '/frontend/build')));   
+    // When a request comes in for a file (for example, /static/js/main.js), Express will look for that file inside the frontend/build folder.
+    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html')));
+    //This route handles all GET requests that are not matched by any other server-side routes.
+
+} else {
+    app.get('/', (req, res) => {
+        res.send('Api is running bro...');
+    });
+}
+  
 
 app.use(notFoundErr);
 app.use(errorHandler);
